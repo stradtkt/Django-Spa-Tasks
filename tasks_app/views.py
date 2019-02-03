@@ -6,11 +6,11 @@ import json
 
 class Tasks(View):
     def get(self, request):
-        return JsonResponse({"status": "ok"})
+        return JsonResponse({"status": "ok", 'tasks': list(Task.objects.values().all())})
 
     def post(self, request):
         body = json.loads(request.body.decode())
-        Task.objects.create(body)
+        Task.objects.create(task=body['task'], status=body['status'])
         return JsonResponse({"status": "ok"})
 
     def put(self, request, task_id):
